@@ -56,6 +56,7 @@ pub struct CommonArgs {
     pub qpack_max_table_capacity: Option<u64>,
     pub qpack_blocked_streams: Option<u64>,
     pub multipath: bool,
+    pub multipath_old: bool,
 }
 
 /// Creates a new `CommonArgs` structure using the provided [`Docopt`].
@@ -189,6 +190,7 @@ impl Args for CommonArgs {
             };
 
         let multipath = args.get_bool("--multipath");
+        let multipath_old = args.get_bool("--multipath-old");
 
         CommonArgs {
             alpns,
@@ -213,6 +215,7 @@ impl Args for CommonArgs {
             qpack_max_table_capacity,
             qpack_blocked_streams,
             multipath,
+            multipath_old,
         }
     }
 }
@@ -242,6 +245,7 @@ impl Default for CommonArgs {
             qpack_max_table_capacity: None,
             qpack_blocked_streams: None,
             multipath: false,
+            multipath_old: false,
         }
     }
 }
@@ -279,6 +283,7 @@ Options:
   --enable-active-migration   Enable active connection migration.
   --perform-migration      Perform connection migration on another source port.
   --multipath              Enable multipath support.
+  --multipath-old          Enable (old v4) multipath support.
   -A --address ADDR ...    Specify addresses to be used instead of the unspecified address. Non-routable addresses will lead to connectivity issues.
   -H --header HEADER ...   Add a request header.
   -n --requests REQUESTS   Send the given number of identical requests [default: 1].
@@ -462,6 +467,7 @@ Options:
   --disable-gso               Disable GSO (linux only).
   --disable-pacing            Disable pacing (linux only).
   --multipath                 Enable multipath support.
+  --multipath-old             Enable (old v4) multipath support.
   -h --help                   Show this screen.
 ";
 
