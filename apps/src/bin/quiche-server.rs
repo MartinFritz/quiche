@@ -804,7 +804,9 @@ fn set_txtime_sockopt(sock: &mio::net::UdpSocket) -> io::Result<()> {
         flags: 0,
     };
 
-    setsockopt(sock.as_raw_fd(), TxTime, &config)?;
+    let fd = unsafe { std::os::fd::BorrowedFd::borrow_raw(sock.as_raw_fd()) };
+
+    setsockopt(&fd, TxTime, &config)?;
 
     Ok(())
 }
